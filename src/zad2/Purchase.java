@@ -20,27 +20,15 @@ public class Purchase{
     public String getId() {
         return id;
     }
-    public String getName() {
-        return name;
-    }
     public String getLname() {
         return lname;
-    }
-    public String getProduct() {
-        return product;
-    }
-    public double getPrice() {
-        return price;
-    }
-    public double getAmount() {
-        return amount;
     }
     public double getTotal(){
         return total;
     }
     
     public String toString(){
-        return id+";"+lname+";"+name+";"+product+";"+price+";"+amount;
+        return id+";"+lname+" "+name+";"+product+";"+price+";"+amount;
     }
     Purchase(String rawString){
         String[] arr = rawString.split(";");

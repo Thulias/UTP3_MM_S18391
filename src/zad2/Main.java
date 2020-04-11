@@ -21,7 +21,6 @@ public class Main {
     for (String id : custSearch) {
       cpsf.showPurchaseFor(id);
     }
-    //cpsf.showAll();
   }
 
 }

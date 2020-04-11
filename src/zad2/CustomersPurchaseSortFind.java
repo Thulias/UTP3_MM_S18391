@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class CustomersPurchaseSortFind {
     
-    ArrayList<Purchase> purchases = new ArrayList<>();
+    private ArrayList<Purchase> purchases = new ArrayList<>();
     
     void readFile(String path) {
         try{
@@ -30,9 +30,6 @@ public class CustomersPurchaseSortFind {
             ex.printStackTrace();
         }
         
-    }
-    void showAll(){
-        System.out.println(purchases);
     }
     void showSortedBy(String sortBy){
         StringBuilder sb = new StringBuilder(sortBy+"\n");
@@ -56,7 +53,12 @@ public class CustomersPurchaseSortFind {
         System.out.println(sb);
     }
     void showPurchaseFor(String id){
-    
+        StringBuilder sb = new StringBuilder("Klient "+id+"\n");
+        List<Purchase> list = purchases.stream().filter(o -> o.getId().equals(id)).collect(Collectors.toList());
+        if(!list.isEmpty()){
+            list.forEach(v -> sb.append(v).append("\n"));
+            System.out.println(sb);
+        }
     }
     
     
