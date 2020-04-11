@@ -7,6 +7,8 @@
 package zad3;
 
 
+import java.io.IOException;
+
 public class Main {
 
   public static void main(String[] args) throws IOException {
@@ -22,6 +24,7 @@ public class Main {
     } catch (Exception exc) {
       System.out.println(exc);
     }
+    /*
     System.out.println("@2 Mapa programistów:");
     try {
       pl.getProgsMap().forEach((k,v)->System.out.println(k+ " = " + v));
@@ -67,6 +70,8 @@ public class Main {
     } catch (Exception exc) {
       System.out.println(exc);
     }
+    
+     */
   }
 
 }
