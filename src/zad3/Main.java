@@ -24,13 +24,14 @@ public class Main {
     } catch (Exception exc) {
       System.out.println(exc);
     }
-    /*
+    
     System.out.println("@2 Mapa programistów:");
     try {
       pl.getProgsMap().forEach((k,v)->System.out.println(k+ " = " + v));
     } catch (Exception exc) {
       System.out.println(exc);
     }
+    /*
     System.out.println("@3 Języki posortowane wg liczby programistów:");
     try {
       pl.getLangsMapSortedByNumOfProgs()
