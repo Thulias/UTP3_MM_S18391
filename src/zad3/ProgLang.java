@@ -9,6 +9,7 @@ package zad3;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ProgLang {
@@ -125,29 +126,43 @@ public class ProgLang {
         return retMap;
     }
     Map<String,ArrayList<String>> getProgsMapForNumOfLangsGreaterThan(int n){
-        LinkedHashMap<String, ArrayList<String>> retMap = new LinkedHashMap<>();
-        ArrayList<Map.Entry<String, ArrayList<String>>> list = new ArrayList<>(getProgsMap().entrySet());
+        LinkedHashMap retMap = new LinkedHashMap<>(getProgsMap());
+        //ArrayList<Map.Entry<String, ArrayList<String>>> list = new ArrayList<>(getProgsMap().entrySet());
         
+        retMap = filter(retMap, (Predicate<Map.Entry<String, ArrayList<String>>>) e -> e.getValue().size() > n);
+        
+        // Before filter(...):
+        /*
         list = list.stream().filter(e -> e.getValue().size() > n).collect(Collectors.toCollection(ArrayList::new));
-        
         list.forEach(e -> retMap.put(e.getKey(),e.getValue()));
         
+         */
+    
         return retMap;
     }
     
-    static LinkedHashMap filter(Map map, Comparator comparator){
-    
+    static LinkedHashMap filter(Map map, Predicate predicate){
+        LinkedHashMap linkedHashMap = new LinkedHashMap<>();
+        ArrayList<Map.Entry> arrayList = new ArrayList<>(map.entrySet());
+        
+        arrayList.removeIf(predicate.negate());
+        
+        arrayList.forEach(e -> linkedHashMap.put(e.getKey(),e.getValue()));
+        
+        return linkedHashMap;
     }
     
     static LinkedHashMap sorted(Map map, Comparator comparator){
         LinkedHashMap linkedHashMap = new LinkedHashMap<>();
         ArrayList<Map.Entry> arrayList = new ArrayList<>(map.entrySet());
+        
         arrayList.sort(comparator);
+        
         arrayList.forEach(e -> linkedHashMap.put(e.getKey(),e.getValue()));
+        
         return linkedHashMap;
     }
     
-    ProgLang(){}
     ProgLang(String path) {
         try{
             FileInputStream fis = new FileInputStream(path);
@@ -168,22 +183,4 @@ public class ProgLang {
             ex.printStackTrace();
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
