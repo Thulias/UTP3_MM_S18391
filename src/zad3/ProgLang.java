@@ -43,8 +43,8 @@ public class ProgLang {
     }
     Map<String, ArrayList<String>> getLangsMapSortedByNumOfProgs(){
         
-        LinkedHashMap<String, ArrayList<String>> retMap = new LinkedHashMap<>();
-        ArrayList<Map.Entry<String, ArrayList<String>>> list = new ArrayList<>(mapAll.entrySet());
+        LinkedHashMap retMap = new LinkedHashMap<>(mapAll);
+        //ArrayList<Map.Entry<String, ArrayList<String>>> list = new ArrayList<>(mapAll.entrySet());
         // removing duplicate last names moved to constructor
         /*
         list.forEach(entry -> {
@@ -55,6 +55,25 @@ public class ProgLang {
         
          */
         
+        retMap = sorted(retMap, Collections.reverseOrder((Comparator<Map.Entry<String, ArrayList<String>>>) (a, b) -> {
+            int i = Integer.compare(a.getValue().size(),b.getValue().size());
+            if (i != 0) {
+                return i;
+            }else{
+                List<String> list1 = new ArrayList<>(Arrays.asList(a.getKey(),b.getKey()));
+                list1.sort(Comparator.comparing(Object::toString));
+    
+                if(list1.get(0).equals(a.getKey()))
+                    return 1;
+                else if(list1.get(0).equals(b.getKey()))
+                    return -1;
+                else
+                    return 0;
+            }
+        }));
+        
+        // Before i read about methods sorted(..) and filtered(...)
+        /*
         list.sort(Collections.reverseOrder((a, b) -> {
             int i = Integer.compare(a.getValue().size(),b.getValue().size());
             if (i != 0) {
@@ -73,13 +92,23 @@ public class ProgLang {
         }));
         
         list.forEach(e -> retMap.put(e.getKey(),e.getValue()));
+         */
         
         return retMap;
      }
     Map<String,ArrayList<String>> getProgsMapSortedByNumOfLangs(){
-        LinkedHashMap<String, ArrayList<String>> retMap = new LinkedHashMap<>();
-        ArrayList<Map.Entry<String, ArrayList<String>>> list = new ArrayList<>(getProgsMap().entrySet());
-    
+        LinkedHashMap retMap = new LinkedHashMap<>(getProgsMap());
+        //ArrayList<Map.Entry<String, ArrayList<String>>> list = new ArrayList<>(getProgsMap().entrySet());
+        
+        retMap = sorted(retMap, Collections.reverseOrder((Comparator<Map.Entry<String, ArrayList<String>>>) (a, b) -> {
+                    int i = Integer.compare(a.getValue().size(),b.getValue().size());
+                    if (i != 0)
+                        return i;
+                    else
+                        return Character.compare(b.getKey().charAt(0), a.getKey().charAt(0));
+                }));
+        // Before sorted():
+        /*
         list.sort(Collections.reverseOrder((a, b) -> {
             int i = Integer.compare(a.getValue().size(),b.getValue().size());
             if (i != 0)
@@ -90,6 +119,8 @@ public class ProgLang {
         }));
     
         list.forEach(e -> retMap.put(e.getKey(),e.getValue()));
+        
+         */
     
         return retMap;
     }
@@ -104,6 +135,19 @@ public class ProgLang {
         return retMap;
     }
     
+    static LinkedHashMap filter(Map map, Comparator comparator){
+    
+    }
+    
+    static LinkedHashMap sorted(Map map, Comparator comparator){
+        LinkedHashMap linkedHashMap = new LinkedHashMap<>();
+        ArrayList<Map.Entry> arrayList = new ArrayList<>(map.entrySet());
+        arrayList.sort(comparator);
+        arrayList.forEach(e -> linkedHashMap.put(e.getKey(),e.getValue()));
+        return linkedHashMap;
+    }
+    
+    ProgLang(){}
     ProgLang(String path) {
         try{
             FileInputStream fis = new FileInputStream(path);
@@ -124,4 +168,22 @@ public class ProgLang {
             ex.printStackTrace();
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
